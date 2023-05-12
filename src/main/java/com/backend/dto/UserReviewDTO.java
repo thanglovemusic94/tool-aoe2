@@ -2,16 +2,67 @@ package com.backend.dto;
 
 import com.backend.models.TYPE;
 
-public interface UserReviewDTO {
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+public class UserReviewDTO {
 
 
-    public String getRank();
-    public String getHang();
-    public String getDiemtrungbinh() ;
-    public Long getUser_review_id();
+    private BigInteger rank;
+    private String hang;
+    private BigDecimal diemtrungbinh;
+    public BigInteger user_review_id;
 
-    public String getInGame();
-    public String getNickZalo();
+    public String inGame;
+    public String nickZalo;
 
+
+    public BigInteger getRank() {
+        return rank;
+    }
+
+    public void setRank(BigInteger rank) {
+        this.rank = rank;
+    }
+
+    public String getHang() {
+        return hang;
+    }
+
+    public void setHang(String hang) {
+        this.hang = hang;
+    }
+
+    public BigDecimal getDiemtrungbinh() {
+        return diemtrungbinh;
+    }
+
+    public void setDiemtrungbinh(BigDecimal diemtrungbinh) {
+        this.diemtrungbinh = diemtrungbinh;
+    }
+
+    public BigInteger getUser_review_id() {
+        return user_review_id;
+    }
+
+    public void setUser_review_id(BigInteger user_review_id) {
+        this.user_review_id = user_review_id;
+    }
+
+    public String getInGame() {
+        return inGame;
+    }
+
+    public void setInGame(String inGame) {
+        this.inGame = inGame;
+    }
+
+    public String getNickZalo() {
+        return nickZalo;
+    }
+
+    public void setNickZalo(String nickZalo) {
+        this.nickZalo = nickZalo;
+    }
 
 }
