@@ -5,17 +5,17 @@ import java.math.BigInteger;
 
 public class DiemTrungBinhViewDTO {
 
-    private BigDecimal diemtrungbinh;
+    private Double diemtrungbinh;
     public BigInteger user_review_id;
     public BigInteger soNguoiDanhGia;
     public String type;
 
 
-    public BigDecimal getDiemtrungbinh() {
+    public Double getDiemtrungbinh() {
         return diemtrungbinh;
     }
 
-    public void setDiemtrungbinh(BigDecimal diemtrungbinh) {
+    public void setDiemtrungbinh(Double diemtrungbinh) {
         this.diemtrungbinh = diemtrungbinh;
     }
 

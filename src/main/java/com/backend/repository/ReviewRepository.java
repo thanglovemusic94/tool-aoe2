@@ -36,23 +36,24 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "        tb.nickZalo as nickZalo,\n" +
             "        (   CASE     \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 9 THEN 'A'     \n" +
+            "            1) >= 9.5 THEN 'A+'     \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >8.5 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 9 THEN 'B'     \n" +
+            "            1) >=8.7 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 9.5 THEN 'A'     \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 5 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 7  THEN 'C'    \n" +
+            "            1) >= 8.4 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.7  THEN 'B'    \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 3 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 5  THEN 'D'    \n" +
+            "            1) >= 8 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.4  THEN 'C'    \n" +
+            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 5.5 && ROUND(AVG(tb.diemtrungbinh),1) < 8  THEN 'D'"+
             "            ELSE 'CHƯA CÓ HẠNG'    \n" +
             "        END  ) as hang \n" +
             "    FROM\n" +
             "        (     SELECT\n" +
             "            rank() over(order by AVG(r.point) DESC),\n" +
             "            ROUND(AVG(r.point),\n" +
-            "            1) as diemtrungbinh,\n" +
+            "            2) as diemtrungbinh,\n" +
             "            r.type,\n" +
             "            r.user_review_id,\n" +
             "            (SELECT\n" +

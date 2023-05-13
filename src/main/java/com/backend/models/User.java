@@ -123,7 +123,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     public void setActive(UserActive active) {
         this.active = active;
     }
-
     private static String maskString(String strText, int start, int end, char maskChar)
             throws Exception{
 

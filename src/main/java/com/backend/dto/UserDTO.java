@@ -9,21 +9,21 @@ public class UserDTO {
     private Long user_review_id;
     private String inGame;
     private TYPE type;
-    private int point;
+    private float point;
 
     public UserDTO(Long user_id, String inGame) {
         this.user_id = user_id;
         this.inGame = inGame;
     }
 
-    public UserDTO(Long user_id, Long user_review_id, TYPE type, int point) {
+    public UserDTO(Long user_id, Long user_review_id, TYPE type, float point) {
         this.user_id = user_id;
         this.user_review_id = user_review_id;
         this.type = type;
         this.point = point;
     }
 
-    public UserDTO(Long user_id, Long user_review_id, String inGame, TYPE type, int point) {
+    public UserDTO(Long user_id, Long user_review_id, String inGame, TYPE type, float point) {
         this.user_id = user_id;
         this.user_review_id = user_review_id;
         this.type = type;
@@ -65,7 +65,7 @@ public class UserDTO {
         return type;
     }
 
-    public int getPoint() {
+    public float getPoint() {
         return point;
     }
 
@@ -85,7 +85,7 @@ public class UserDTO {
         this.type = type;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 }

@@ -44,7 +44,7 @@ public class HomeController {
                                                          UserReviewDTO dto = new UserReviewDTO();
                                                          dto.setRank((BigInteger) tuple.get("rank"));
                                                          dto.setHang((String) tuple.get("hang"));
-                                                         dto.setDiemtrungbinh((BigDecimal) tuple.get("diemtrungbinh"));
+                                                         dto.setDiemtrungbinh((Double) tuple.get("diemtrungbinh"));
                                                          dto.setUser_review_id((BigInteger) tuple.get("user_review_id"));
                                                          dto.setNickZalo((String) tuple.get("nickZalo"));
                                                          dto.setInGame((String) tuple.get("inGame"));
@@ -76,7 +76,7 @@ public class HomeController {
             public DiemTrungBinhViewDTO apply(Tuple tuple) {
                 DiemTrungBinhViewDTO dto = new DiemTrungBinhViewDTO();
                 dto.setType((String) tuple.get("type"));
-                dto.setDiemtrungbinh((BigDecimal) tuple.get("diemtrungbinh"));
+                dto.setDiemtrungbinh((Double) tuple.get("diemtrungbinh"));
                 dto.setSoNguoiDanhGia((BigInteger) tuple.get("soNguoiDanhGia"));
                 dto.setUser_review_id((BigInteger) tuple.get("user_review_id"));
                 return dto;

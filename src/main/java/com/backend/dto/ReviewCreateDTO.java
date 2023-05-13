@@ -9,7 +9,7 @@ public class ReviewCreateDTO {
 
     private Long user_review_id;
     private Long user_id;
-    private int point;
+    private float point;
     private TYPE type;
     private String inGame;
 
@@ -37,11 +37,11 @@ public class ReviewCreateDTO {
         this.user_id = user_id;
     }
 
-    public int getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 

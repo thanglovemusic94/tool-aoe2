@@ -2,6 +2,7 @@ package com.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,12 +12,13 @@ import java.io.Serializable;
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user_id", "user_review_id", "type"})
         })
+@DynamicUpdate
 public class Review extends AbstractAuditingEntity<Long> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int point;
+    private float point;
 
     private Long user_review_id;
 
@@ -31,7 +33,7 @@ public class Review extends AbstractAuditingEntity<Long> implements Serializable
     private User user;
 
 
-    public Review(int point, Long user_review_id, TYPE type, User user) {
+    public Review(float point, Long user_review_id, TYPE type, User user) {
         this.point = point;
         this.user_review_id = user_review_id;
         this.type = type;
@@ -58,11 +60,11 @@ public class Review extends AbstractAuditingEntity<Long> implements Serializable
         this.id = id;
     }
 
-    public int getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 

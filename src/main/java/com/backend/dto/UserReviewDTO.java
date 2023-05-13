@@ -10,7 +10,7 @@ public class UserReviewDTO {
 
     private BigInteger rank;
     private String hang;
-    private BigDecimal diemtrungbinh;
+    private Double diemtrungbinh;
     public BigInteger user_review_id;
 
     public String inGame;
@@ -33,11 +33,11 @@ public class UserReviewDTO {
         this.hang = hang;
     }
 
-    public BigDecimal getDiemtrungbinh() {
+    public Double getDiemtrungbinh() {
         return diemtrungbinh;
     }
 
-    public void setDiemtrungbinh(BigDecimal diemtrungbinh) {
+    public void setDiemtrungbinh(Double diemtrungbinh) {
         this.diemtrungbinh = diemtrungbinh;
     }
 
