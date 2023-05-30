@@ -1,7 +1,6 @@
 package com.backend.repository;
 
 import com.backend.dto.DiemTrungBinhView;
-import com.backend.dto.DiemTrungBinhViewDTO;
 import com.backend.models.Review;
 import com.backend.models.TYPE;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -38,16 +38,26 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
             "            1) >= 9.5 THEN 'A+'     \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >=8.7 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) >=8.8 && ROUND(AVG(tb.diemtrungbinh),\n" +
             "            1) < 9.5 THEN 'A'     \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 8.4 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.7  THEN 'B'    \n" +
+            "            1) >= 8.6 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.8  THEN 'A-'    \n" +
             "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 8 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.4  THEN 'C'    \n" +
-            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 5.5 && ROUND(AVG(tb.diemtrungbinh),1) < 8  THEN 'D'"+
-            "            ELSE 'CHƯA CÓ HẠNG'    \n" +
+            "            1) >= 8.4 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.6  THEN 'B'    \n" +
+            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) >= 8.1 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.4  THEN 'B-'    \n" +
+            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) >= 7.8 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 8.1  THEN 'C'    \n" +
+            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) >= 7.5 && ROUND(AVG(tb.diemtrungbinh),\n" +
+            "            1) < 7.8  THEN 'C-'    \n" +
+            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 7 && ROUND(AVG(tb.diemtrungbinh),1) < 7.5  THEN 'D' \n"+
+            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 4 && ROUND(AVG(tb.diemtrungbinh),1) < 7 THEN 'D-' \n"+
+            "           ELSE 'CHƯA CÓ HẠNG'    \n" +
             "        END  ) as hang \n" +
             "    FROM\n" +
             "        (     SELECT\n" +
@@ -113,4 +123,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query(value = query4, countQuery = query4, nativeQuery = true)
     List<Tuple> findDiemTrungBinhDTOById(@Param(value = "user_review_id") Long user_review_id);
+    @Query(value = "SELECT count(tb.review_id) as soNguoiChamDiem FROM (SELECT r.id as review_id  FROM review r  WHERE user_review_id = :user_review_id GROUP BY user_review_id, user_id) tb", nativeQuery = true)
+    Long soNguoiChamDiemById(BigInteger user_review_id);
 }

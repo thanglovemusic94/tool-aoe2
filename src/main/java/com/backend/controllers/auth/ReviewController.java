@@ -84,8 +84,7 @@ public class ReviewController {
         }
 
 
-        newListUser.sort(Comparator.comparing(UserDTO::getPoint).reversed());
-        //newListUser.sort(Comparator.comparingDouble(UserDTO::getPoint).reversed());
+        newListUser.sort(Comparator.comparing(UserDTO::getPoint));
 
         return newListUser;
     }

@@ -33,7 +33,7 @@ public class HomeController {
 
 
     @GetMapping("")
-    public Page<UserReviewDTO> getAll(Pageable pageable) {
+    public Page<UserReviewDTO> getAll(Pageable pageable, @RequestParam(required = false) String xh) {
 
 
         Page<Tuple> tuplePage = reviewRepository.findAllHomePage(pageable);
@@ -44,10 +44,74 @@ public class HomeController {
                                                          UserReviewDTO dto = new UserReviewDTO();
                                                          dto.setRank((BigInteger) tuple.get("rank"));
                                                          dto.setHang((String) tuple.get("hang"));
-                                                         dto.setDiemtrungbinh((Double) tuple.get("diemtrungbinh"));
+
                                                          dto.setUser_review_id((BigInteger) tuple.get("user_review_id"));
                                                          dto.setNickZalo((String) tuple.get("nickZalo"));
                                                          dto.setInGame((String) tuple.get("inGame"));
+
+                                                         Long soNguoiChamDiem = reviewRepository.soNguoiChamDiemById((BigInteger) tuple.get("user_review_id"));
+                                                         dto.setSoNguoiChamDiem(soNguoiChamDiem);
+
+//                                                         WHEN r.type = 'PHAT_TRIEN' THEN ROUND(AVG(r.point),1) * 3
+//                                                         WHEN r.type = 'EP_DOI' THEN ROUND(AVG(r.point),1) * 1
+//                                                         WHEN r.type = 'DIEU_R' THEN ROUND(AVG(r.point),1) * 1
+//                                                         WHEN r.type = 'THAO_TAC_TAY' THEN ROUND(AVG(r.point),1) * 1
+//                                                         WHEN r.type = 'DI_QUAN' THEN ROUND(AVG(r.point),1) * 2
+//                                                         WHEN r.type = 'CHIEN_THUAT' THEN ROUND(AVG(r.point),1) * 2
+//                                                         WHEN r.type = 'THU_NHA' THEN ROUND(AVG(r.point),1) * 3
+
+                                                         if (xh.equals("xh44")){
+                                                             List<Tuple> views =   reviewRepository.findDiemTrungBinhDTOById(dto.getUser_review_id().longValue());
+                                                             double diemtb = 0;
+                                                             for (int i = 0; i < views.size(); i++) {
+                                                                 if (views.get(i).get(3).equals("THAO_TAC_TAY")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }else if (views.get(i).get(3).equals("PHAT_TRIEN")){
+                                                                     diemtb += (double) views.get(i).get(1) * 3;
+                                                                 }if (views.get(i).get(3).equals("EP_DOI")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }if (views.get(i).get(3).equals("DIEU_R")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }if (views.get(i).get(3).equals("DI_QUAN")){
+                                                                     diemtb += (double) views.get(i).get(1) * 2;
+                                                                 }if (views.get(i).get(3).equals("CHIEN_THUAT")){
+                                                                     diemtb += (double) views.get(i).get(1) * 2;
+                                                                 }if (views.get(i).get(3).equals("THU_NHA")){
+                                                                     diemtb += (double) views.get(i).get(1) * 3;
+                                                                 }
+
+                                                             }
+                                                             diemtb = diemtb/13;
+                                                             diemtb = Math.ceil(diemtb * 10) / 10;
+                                                             dto.setDiemtrungbinh(diemtb);
+                                                         }else if (xh.equals("xh22")){
+                                                             List<Tuple> views =   reviewRepository.findDiemTrungBinhDTOById(dto.getUser_review_id().longValue());
+                                                             double diemtb = 0;
+                                                             for (int i = 0; i < views.size(); i++) {
+                                                                 if (views.get(i).get(3).equals("THAO_TAC_TAY")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }else if (views.get(i).get(3).equals("PHAT_TRIEN")){
+                                                                     diemtb += (double) views.get(i).get(1) * 2;
+                                                                 }if (views.get(i).get(3).equals("EP_DOI")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }if (views.get(i).get(3).equals("DIEU_R")){
+                                                                     diemtb += (double) views.get(i).get(1) * 2;
+                                                                 }if (views.get(i).get(3).equals("DI_QUAN")){
+                                                                     diemtb += (double) views.get(i).get(1) * 3;
+                                                                 }if (views.get(i).get(3).equals("CHIEN_THUAT")){
+                                                                     diemtb += (double) views.get(i).get(1) * 1;
+                                                                 }if (views.get(i).get(3).equals("THU_NHA")){
+                                                                     diemtb += (double) views.get(i).get(1) * 2;
+                                                                 }
+
+                                                             }
+                                                             diemtb = diemtb/12;
+                                                             diemtb = Math.ceil(diemtb * 10) / 10;
+                                                             dto.setDiemtrungbinh(diemtb);
+                                                         }
+                                                         else if (xh.equals("null") ){
+                                                             dto.setDiemtrungbinh((Double) tuple.get("diemtrungbinh"));
+                                                         }
                                                          return dto;
                                                      }
                                                  }
@@ -85,27 +149,7 @@ public class HomeController {
 
         return dtos;
     }
-//    @GetMapping("/diemtrungbinh2")
-//    public Page<DiemTrungBinhDTO> getAlDiemTrungBinh(@RequestParam(required = false, defaultValue = "null") String type, Pageable pageable) {
-//        Page<Tuple> tuplePage = reviewRepository.findAllDiemTrungBinh(type, pageable);
-//
-//        Page<DiemTrungBinhDTO> page = tuplePage.map(new Function<Tuple, DiemTrungBinhDTO>() {
-//                                                        @Override
-//                                                        public DiemTrungBinhDTO apply(Tuple tuple) {
-//                                                            DiemTrungBinhDTO dto = new DiemTrungBinhDTO();
-//                                                            dto.setSoNguoiDanhGia(tuple.get(0, BigInteger.class));
-//                                                            dto.setHang(tuple.get(1, BigInteger.class));
-//                                                            dto.setDiemtrungbinh((BigDecimal) tuple.get("diemtrungbinh"));
-//                                                            dto.setUser_review_id(tuple.get(3, BigInteger.class));
-//                                                            dto.setNickZalo(tuple.get(4, String.class));
-//                                                            dto.setInGame(tuple.get(5, String.class));
-//                                                            return dto;
-//                                                        }
-//                                                    }
-//
-//        );
-//        return page;
-//    }
+
 }
 
 

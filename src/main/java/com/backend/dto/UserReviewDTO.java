@@ -15,7 +15,16 @@ public class UserReviewDTO {
 
     public String inGame;
     public String nickZalo;
+    public Long soNguoiChamDiem;
 
+
+    public Long getSoNguoiChamDiem() {
+        return soNguoiChamDiem;
+    }
+
+    public void setSoNguoiChamDiem(Long soNguoiChamDiem) {
+        this.soNguoiChamDiem = soNguoiChamDiem;
+    }
 
     public BigInteger getRank() {
         return rank;
