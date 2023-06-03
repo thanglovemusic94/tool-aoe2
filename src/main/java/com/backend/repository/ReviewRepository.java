@@ -1,6 +1,7 @@
 package com.backend.repository;
 
 import com.backend.dto.DiemTrungBinhView;
+import com.backend.dto.TongDiemTBView;
 import com.backend.models.Review;
 import com.backend.models.TYPE;
 import org.springframework.data.domain.Page;
@@ -93,7 +94,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "        ORDER BY\n" +
             "            AVG(tb.diemtrungbinh) DESC ";
     @Query(value = query2, countQuery = query2, nativeQuery = true)
-    Page<Tuple> findAllHomePage(Pageable pageable);
+    Page<TongDiemTBView> findAllHomePage(Pageable pageable);
 
 
     String query3 = "\n" +
