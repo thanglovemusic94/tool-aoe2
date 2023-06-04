@@ -29,35 +29,17 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void deleteAllByUser_Id(Long user_id);
 
     String query2 = "SELECT\n" +
-            "\t\t\t\trank()  over(order by AVG(tb.diemtrungbinh) DESC) as `rank` ,\n" +
+            "\t\t\t\t ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) as `rank` ,\n" +
             "        ROUND(AVG(tb.diemtrungbinh),\n" +
             "        1) as diemtrungbinh,\n" +
             "        tb.user_review_id as user_review_id,\n" +
             "        tb.inGame as inGame,\n" +
             "        tb.nickZalo as nickZalo,\n" +
             "        (   CASE     \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 9.5 THEN 'A+'     \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >=8.8 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 9.5 THEN 'A'     \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 8.6 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.8  THEN 'A-'    \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 8.4 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.6  THEN 'B'    \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 8.1 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.4  THEN 'B-'    \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 7.8 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 8.1  THEN 'C'    \n" +
-            "            WHEN ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) >= 7.5 && ROUND(AVG(tb.diemtrungbinh),\n" +
-            "            1) < 7.8  THEN 'C-'    \n" +
-            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 7 && ROUND(AVG(tb.diemtrungbinh),1) < 7.5  THEN 'D' \n"+
-            "           WHEN ROUND(AVG(tb.diemtrungbinh),1) >= 4 && ROUND(AVG(tb.diemtrungbinh),1) < 7 THEN 'D-' \n"+
+            "           WHEN ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) <=16 THEN 'A'     \n" +
+            "           WHEN 16 <ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) && ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) <=32 THEN 'B'     \n" +
+            "           WHEN 32 < ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) && ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc) <=48 THEN 'C'     \n" +
+            "           WHEN 48 <ROW_NUMBER() OVER(ORDER BY AVG(tb.diemtrungbinh) desc)  THEN 'D'     \n" +
             "           ELSE 'CHƯA CÓ HẠNG'    \n" +
             "        END  ) as hang \n" +
             "    FROM\n" +
