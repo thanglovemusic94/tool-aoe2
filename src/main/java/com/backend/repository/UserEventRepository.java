@@ -14,4 +14,8 @@ public interface UserEventRepository  extends JpaRepository<UserEvent, Long> {
     @Query(value = "SELECT u.nick_zalo as NickZalo, u.in_game as InGame, ue.status_dong_tien as StatusDongTien, ue.tien_dong as DaDong, ue.tien_ho_tro_giai as HoTroGiai " +
             "FROM users as u JOIN user_event as ue on u.id = ue.user_id WHERE ue.event_id = :userEventId", nativeQuery = true)
     List<UserEventView> findUserByEventId(Long userEventId);
+
+
+    @Query("select count(ue.id)>0 from UserEvent ue  where ue.event.eventCode = :eventCode and ue.user.id = :userId")
+    boolean existsBUserAndEvent(String eventCode, Long userId);
 }

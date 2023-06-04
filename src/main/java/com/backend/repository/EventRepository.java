@@ -9,4 +9,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Event findOneEventNew();
 
     Event findByEventCode(String code);
+
+
+
 }

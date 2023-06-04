@@ -15,7 +15,10 @@ import com.backend.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -64,15 +67,22 @@ public class HomeController {
     }
 
     @PostMapping("/event-register/{event_code}")
-    public UserEvent registerEventUser(@PathVariable String event_code){
+    public ResponseEntity<?> registerEventUser(@PathVariable String event_code){
         UserDetailsImpl user = (UserDetailsImpl) authenticationFacade.getAuthentication();
-        Event event = eventRepository.findByEventCode(event_code);
-        User user1 = userRepository.findById(user.getId()).get();
-        UserEvent userEvent = new UserEvent();
-        userEvent.setEvent(event);
-        userEvent.setUser(user1);
-        userEventRepository.save(userEvent);
-        return userEvent;
+
+        boolean checkExit = userEventRepository.existsBUserAndEvent(event_code, user.getId());
+        if (checkExit){
+            return new ResponseEntity<>("Bạn đã đăng ký giải đấu này rồi ", HttpStatus.BAD_REQUEST);
+        }else {
+            Event event = eventRepository.findByEventCode(event_code);
+            User user1 = userRepository.findById(user.getId()).get();
+            UserEvent userEvent = new UserEvent();
+            userEvent.setEvent(event);
+            userEvent.setUser(user1);
+            userEventRepository.save(userEvent);
+            return new ResponseEntity<>(userEvent, HttpStatus.OK);
+        }
+
     }
 
     @GetMapping("/event-register/{event_id}")
