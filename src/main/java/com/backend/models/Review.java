@@ -33,6 +33,8 @@ public class Review extends AbstractAuditingEntity<Long> implements Serializable
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private User user;
 
+    @Column(columnDefinition = "int default 1")
+    private Integer heSo;
 
     public Review(float point, Long user_review_id, TYPE type, User user) {
         this.point = point;

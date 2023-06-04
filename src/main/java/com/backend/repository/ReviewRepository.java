@@ -45,8 +45,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "    FROM\n" +
             "        (     SELECT\n" +
             "            rank() over(order by AVG(r.point) DESC),\n" +
-            "            ROUND(AVG(r.point),\n" +
-            "            2) as diemtrungbinh,\n" +
+            "            ROUND(sum(r.he_so*r.point)/sum(r.he_so), 1) as diemtrungbinh ,\n" +
             "            r.type,\n" +
             "            r.user_review_id,\n" +
             "            (SELECT\n" +
@@ -82,7 +81,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     String query3 = "\n" +
             "SELECT count(r.id) as soNguoiDanhGia, " +
             "rank() over(order by AVG(r.point) DESC) as `rank`,  \n" +
-            "ROUND(AVG(r.point),1) as diemtrungbinh, \n" +
+            "ROUND(sum(r.he_so*r.point)/sum(r.he_so), 1) as diemtrungbinh , \n" +
             "r.user_review_id as user_review_id, \n" +
             "(SELECT nick_zalo FROM users u WHERE u.id = r.user_review_id) as nickZalo ,\n" +
             "(SELECT in_game FROM users u WHERE u.id = r.user_review_id) as inGame \n" +
@@ -95,7 +94,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     String query4 = "SELECT \n" +
             "\tcount(r.id) as soNguoiDanhGia,\n" +
-            "\tROUND(AVG(r.point),1) as diemtrungbinh, \n" +
+            "\tROUND(sum(r.he_so*r.point)/sum(r.he_so), 1) as diemtrungbinh , \n" +
             "r.user_review_id as user_review_id, \n" +
             "\tr.type as `type` \n" +
             "\tFROM review r JOIN users u on u.id = r.user_id WHERE (r.user_review_id = :user_review_id or :user_review_id is null) \n" +
