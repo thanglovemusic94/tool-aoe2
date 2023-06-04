@@ -1,10 +1,10 @@
 package com.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cascade;
+import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,6 +13,7 @@ import java.io.Serializable;
                 @UniqueConstraint(columnNames = {"user_id", "user_review_id", "type"})
         })
 @DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 public class Review extends AbstractAuditingEntity<Long> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,8 +2,7 @@ package com.backend.dto;
 
 import com.backend.models.TYPE;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+
 
 public class ReviewCreateDTO {
 

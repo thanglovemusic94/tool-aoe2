@@ -1,20 +1,18 @@
 package com.backend.models;
 
 
-import org.hibernate.annotations.Cascade;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "inGame")
         })
+@EntityListeners(AuditingEntityListener.class)
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

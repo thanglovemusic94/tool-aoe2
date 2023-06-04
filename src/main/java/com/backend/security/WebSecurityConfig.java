@@ -7,27 +7,28 @@ import com.backend.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-    // securedEnabled = true,
-    // jsr250Enabled = true,
+//     securedEnabled = true,
+//     jsr250Enabled = true,
     prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig{
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
@@ -39,33 +40,44 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new AuthTokenFilter();
   }
 
-  @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    //authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+  @Bean(name="myPasswordEncoder")
+  public PasswordEncoder getPasswordEncoder() {
+
+    return NoOpPasswordEncoder.getInstance();
   }
 
   @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
+  public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
   }
 
-//  @Bean
-//  public PasswordEncoder passwordEncoder() {
-//    return new BCryptPasswordEncoder();
-//  }
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
-      .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-      .authorizeRequests().antMatchers("/api/auth/*").hasAnyAuthority(ERole.ROLE_ADMIN.getAuthority(), ERole.ROLE_USER.getAuthority())
-//      .authorizeRequests().antMatchers("/api/auth/*").hasAuthority(ERole.ROLE_ADMIN.getAuthority())
-//      .antMatchers("/api/*").hasAnyAuthority(ERole.ROLE_ADMIN.getAuthority(), ERole.ROLE_USER.getAuthority())
-      .anyRequest().permitAll();
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .requestMatchers("/api/auth/*").hasAuthority(ERole.ROLE_ADMIN.getAuthority())
+//            .requestMatchers("/api/*").hasAnyAuthority(ERole.ROLE_ADMIN.getAuthority(), ERole.ROLE_USER.getAuthority())
+            .anyRequest().permitAll();
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+  }
+
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedMethods(HttpMethod.DELETE.name(), HttpMethod.POST.name(),
+                        HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(), HttpMethod.PUT.name(),
+                        HttpMethod.PATCH.name())
+                .allowedOrigins("*");
+      }
+    };
   }
 }

@@ -1,8 +1,7 @@
 package com.backend.payload.request;
 
-import java.util.Set;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
 
 public class SignupRequest {
 

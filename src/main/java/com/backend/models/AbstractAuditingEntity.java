@@ -1,13 +1,12 @@
 package com.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -15,9 +14,7 @@ import java.time.Instant;
  * Base abstract class for entities which will hold definitions for created, last modified, created by,
  * last modified by attributes.
  */
-@EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate" }, allowGetters = true)
-@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class AbstractAuditingEntity<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +36,7 @@ public abstract class AbstractAuditingEntity<T> implements Serializable {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private Instant lastModifiedDate = Instant.now();
+
 
     public String getCreatedBy() {
         return createdBy;

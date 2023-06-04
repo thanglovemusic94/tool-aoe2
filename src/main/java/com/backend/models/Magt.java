@@ -1,6 +1,9 @@
 package com.backend.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+
 import java.io.Serializable;
 
 @Entity
@@ -8,6 +11,8 @@ import java.io.Serializable;
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "code")
         })
+
+@EntityListeners(AuditingEntityListener.class)
 public class Magt extends AbstractAuditingEntity<Long> implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

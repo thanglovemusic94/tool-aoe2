@@ -13,6 +13,7 @@ import com.backend.repository.MagtRepository;
 import com.backend.repository.UserRepository;
 import com.backend.security.jwt.JwtUtils;
 import com.backend.security.services.AuthenticationFacade;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api")
