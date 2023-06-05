@@ -12,10 +12,7 @@ import com.backend.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -36,21 +33,77 @@ public class ReviewController {
     public void createReview(@RequestBody List<ReviewCreateDTO> dtoList) {
         UserDetailsImpl user1 = (UserDetailsImpl) authenticationFacade.getAuthentication();
         Long user_id = user1.getId();
+        List<Long> idUserHeSoX5 = new ArrayList<>(Arrays.asList(1l, 2l, 6l, 7l));
         for (int i = 0; i < dtoList.size(); i++) {
             float point = dtoList.get(i).getPoint();
             // kiểm tra nếu point >= 4 mới cho thay đổi dữ liệu
             if (point >= 4) {
                 // kiểm tra user_review_id đã tồn tại trong review hay chua hay chưa, nếu chua thì add vao, neu co roi thi thay doi point thoi
                 Boolean check = reviewRepository.existsByUser_review_id(dtoList.get(i).getUser_review_id(), user_id, dtoList.get(i).getType());
-                if (check) {
+                if (check) { // co roi
                     Review review = reviewRepository.findReviewByUser_review_id(dtoList.get(i).getUser_review_id(), user_id, dtoList.get(i).getType());
                     review.setPoint(dtoList.get(i).getPoint());
                     reviewRepository.save(review);
-                } else {
+                } else { // chua co
+                    Review review = new Review();
+
+                    if (idUserHeSoX5.contains(user_id)){
+                        review.setHeSo(5);
+                    }else review.setHeSo(1);
+
+                    switch (dtoList.get(i).getType()) {
+                        case DIEU_R -> {
+                            review.setHeSoSolo(3);
+                            review.setHeSo22(2);
+                            review.setHeSo44(1);
+                        }
+                        case PHAT_TRIEN -> {
+                            review.setHeSoSolo(2);
+                            review.setHeSo22(2);
+                            review.setHeSo44(3);
+                        }
+                        case THU_NHA -> {
+                            review.setHeSoSolo(1);
+                            review.setHeSo22(2);
+                            review.setHeSo44(3);
+                        }
+                        case CHIEN_THUAT -> {
+                            review.setHeSoSolo(1) ;
+                            review.setHeSo22(1);
+                            review.setHeSo44(2);
+                        }
+                        case DI_QUAN -> {
+                            review.setHeSoSolo(2) ;
+                            review.setHeSo22(3);
+                            review.setHeSo44(2);
+                        }
+                        case EP_DOI -> {
+                            review.setHeSoSolo(3);
+                            review.setHeSo22(1);
+                            review.setHeSo44(1);
+                        }
+                        case THAO_TAC_TAY -> {
+                            review.setHeSoSolo(1);
+                            review.setHeSo22(1);
+                            review.setHeSo44(1);
+                        }
+                        default -> {
+                            review.setHeSoSolo(1);
+                            review.setHeSo22(1);
+                            review.setHeSo44(1);
+                        }
+                    }
+
                     User user = userRepository.getById(user_id);
                     Long user_review_id = dtoList.get(i).getUser_review_id();
                     TYPE type = dtoList.get(i).getType();
-                    Review review = new Review(point, user_review_id, type, user);
+
+                    review.setUser(user);
+                    review.setUser_review_id(user_review_id);
+                    review.setType(type);
+                    review.setPoint(point);
+
+
                     reviewRepository.save(review);
                 }
             }

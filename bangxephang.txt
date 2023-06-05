@@ -1,0 +1,31 @@
+  /*
+                        Solo
+                        Điều R x3
+                        Phát triển & Cơ Cấu x2
+                        Thủ nhà & bắt quân x1
+                        Chiến thuật x1
+                        Đi quânx2
+                        Ép đời x3
+                        Thao tácx1
+                     */
+                     /*
+                        22
+                        Điều R x2
+                        Phát triển & Cơ Cấu x2
+                        Thủ nhà & bắt quân x2
+                        Chiến thuật x1
+                        Đi quânx3
+                        Ép đời x1
+                        Thao tácx1
+                     */
+
+                     /*
+                        44
+                        Điều R x1
+                        Phát triển & Cơ Cấu x3
+                        Thủ nhà & bắt quân x3
+                        Chiến thuật x2
+                        Đi quânx2
+                        Ép đời x1
+                        Thao tácx1
+                     */

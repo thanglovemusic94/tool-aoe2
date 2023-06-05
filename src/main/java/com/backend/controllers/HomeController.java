@@ -44,8 +44,27 @@ public class HomeController {
 
     @GetMapping("")
     public Page<TongDiemTBView> getAll(Pageable pageable, @RequestParam(required = false) String xh) {
-        Page<TongDiemTBView> page = reviewRepository.findAllHomePage(pageable);
-        return page;
+        if (xh.equals("null") || xh == null){
+            Page<TongDiemTBView> page = reviewRepository.findAllHomePage(pageable);
+            return page;
+        }
+
+        if (xh.equals("solo") ){
+            Page<TongDiemTBView> page = reviewRepository.findAllHomePageSolo(pageable);
+            return page;
+        }
+
+        if (xh.equals("xh22") ){
+            Page<TongDiemTBView> page = reviewRepository.findAllHomePage22(pageable);
+            return page;
+        }
+
+        if (xh.equals("xh44") ){
+            Page<TongDiemTBView> page = reviewRepository.findAllHomePage44(pageable);
+            return page;
+        }
+
+        return null;
     }
 
     //  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
