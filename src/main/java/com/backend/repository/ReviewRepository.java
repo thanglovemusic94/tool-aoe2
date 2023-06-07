@@ -77,7 +77,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(value = query2, countQuery = query2, nativeQuery = true)
     Page<TongDiemTBView> findAllHomePage(Pageable pageable);
 
-    String querySolo = "SELECT\t ROW_NUMBER() OVER(ORDER BY sum(tb.diemtrungbinhSolo)/sum(he_so_solo) desc) as rank ,    \n" +
+    String querySolo = "SELECT\t ROW_NUMBER() OVER(ORDER BY sum(tb.diemtrungbinhSolo)/sum(he_so_solo) desc) as `rank` ,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t ROUND(sum(tb.diemtrungbinhSolo)/sum(he_so_solo), 1) as diemtrungbinh,      \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.user_review_id as user_review_id,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.inGame as inGame,    \n" +
@@ -116,7 +116,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<TongDiemTBView> findAllHomePageSolo(Pageable pageable);
 
 
-    String query22 = "\t\t\t\t\t\t\t\t\tSELECT\t ROW_NUMBER() OVER(ORDER BY sum(tb.diemtrungbinh22) desc) as rank ,    \n" +
+    String query22 = "\t\t\t\t\t\t\t\t\tSELECT\t ROW_NUMBER() OVER(ORDER BY sum(tb.diemtrungbinh22) desc) as `rank` ,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t ROUND(sum(tb.diemtrungbinh22)/sum(he_so22), 1) as diemtrungbinh,      \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.user_review_id as user_review_id,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.inGame as inGame,    \n" +
@@ -155,7 +155,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 
 
-    String query44 = " SELECT\t ROW_NUMBER() OVER(ORDER BY ROUND(sum(tb.diemtrungbinh44)/sum(he_so44), 2) desc) as rank ,    \n" +
+    String query44 = " SELECT\t ROW_NUMBER() OVER(ORDER BY ROUND(sum(tb.diemtrungbinh44)/sum(he_so44), 2) desc) as `rank` ,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t ROUND(sum(tb.diemtrungbinh44)/sum(he_so44), 1) as diemtrungbinh,      \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.user_review_id as user_review_id,    \n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t tb.inGame as inGame,    \n" +
