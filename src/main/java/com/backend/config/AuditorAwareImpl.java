@@ -20,7 +20,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
             String username = authentication.getName();
             return Optional.ofNullable(username);
         }else {
-            return Optional.of("FioRuna");
+            return Optional.of("SYSTEM");
         }
     }
 }

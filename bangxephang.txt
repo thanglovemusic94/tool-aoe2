@@ -29,3 +29,24 @@
                         Ép đời x1
                         Thao tácx1
                      */
+
+                     hệ số 44: ep doi - x2, dieu r - x3
+                     hệ số 22: ep doi - x1, dieu r - x2
+
+                     lâm : ep doi 4 , dieu r 4
+                     lâm : ep doi 3 , dieu r 3
+
+                     hệ số cá nhân(heso):  5
+
+                     thắng: ep doi 9 , dieu r 9
+                     hệ số cá nhân(heso):  1
+
+p1:
+44
+lam ((5 * 2 * 4) + (5 * 2 * 3)/5*2 +((5 * 3 * 4)+ (5 * 2 * 3))/5*3)/2 = 8
+
+22
+lam ((5 * 1 * 8)/5*1 +(5 * 2 * 8)/5*2)/2 = 8
+
+
+p2 5*2*8 + 5*3*8 =
