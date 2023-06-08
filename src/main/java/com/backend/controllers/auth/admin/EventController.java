@@ -1,4 +1,4 @@
-package com.backend.controllers.auth;
+package com.backend.controllers.auth.admin;
 
 import com.backend.models.Event;
 import com.backend.models.Magt;

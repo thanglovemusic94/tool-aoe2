@@ -13,14 +13,17 @@ import com.backend.repository.MagtRepository;
 import com.backend.repository.UserRepository;
 import com.backend.security.jwt.JwtUtils;
 import com.backend.security.services.AuthenticationFacade;
+import com.backend.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 
 @RestController
@@ -44,8 +47,10 @@ public class AuthController {
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     authenticationFacade.setAuthentication(loginRequest.getInGame(), loginRequest.getPassword());
+    UserDetailsImpl user = (UserDetailsImpl) authenticationFacade.getAuthentication();
+    List<GrantedAuthority> authorities = (List<GrantedAuthority>) user.getAuthorities();
     String jwt = jwtUtils.generateJwtToken();
-    return ResponseEntity.ok(new JwtResponse(jwt));
+    return ResponseEntity.ok(new JwtResponse(jwt, authorities.get(0)));
   }
 
   @PostMapping("/signup")

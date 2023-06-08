@@ -22,7 +22,7 @@ public class UserEvent extends AbstractAuditingEntity<Long> implements Serializa
     Event event;
 
     @Column(name = "status_dong_tien")
-    Boolean statusDongTien = false;
+    int statusDongTien = 0;
     Long tienDong;
 
     Long tienHoTroGiai;
@@ -44,11 +44,11 @@ public class UserEvent extends AbstractAuditingEntity<Long> implements Serializa
         this.tienHoTroGiai = tienHoTroGiai;
     }
 
-    public Boolean getStatusDongTien() {
+    public int getStatusDongTien() {
         return statusDongTien;
     }
 
-    public void setStatusDongTien(Boolean statusDongTien) {
+    public void setStatusDongTien(int statusDongTien) {
         this.statusDongTien = statusDongTien;
     }
 
