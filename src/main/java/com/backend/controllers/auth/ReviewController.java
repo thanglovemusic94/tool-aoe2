@@ -34,6 +34,8 @@ public class ReviewController {
         UserDetailsImpl user1 = (UserDetailsImpl) authenticationFacade.getAuthentication();
         Long user_id = user1.getId();
         List<Long> idUserHeSoX5 = new ArrayList<>(Arrays.asList(1l, 2l, 6l, 7l));
+        List<Long> idUserHeSoX10 = new ArrayList<>(Arrays.asList(72l));
+
         for (int i = 0; i < dtoList.size(); i++) {
             float point = dtoList.get(i).getPoint();
             // kiểm tra nếu point >= 4 mới cho thay đổi dữ liệu
@@ -49,6 +51,10 @@ public class ReviewController {
 
                     if (idUserHeSoX5.contains(user_id)){
                         review.setHeSo(5);
+                    }else review.setHeSo(1);
+
+                    if (idUserHeSoX10.contains(user_id)){
+                        review.setHeSo(10);
                     }else review.setHeSo(1);
 
                     switch (dtoList.get(i).getType()) {
