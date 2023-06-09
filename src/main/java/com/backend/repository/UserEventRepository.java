@@ -16,6 +16,21 @@ public interface UserEventRepository  extends JpaRepository<UserEvent, Long> {
     List<UserEventView> findUserByEventId(Long userEventId);
 
 
+    String queryView = "SELECT \t\t\t\t\t\t\t\t\t \n" +
+            "\t\tROW_NUMBER() OVER(ORDER BY view1.diemtrungbinh desc) as STT,\n" +
+            "\t\tview1.hang as `Hang`, \n" +
+            "\t\tview1.diemtrungbinh as `DiemTrungBinh`, \n" +
+            "\t\tview1.inGame as `InGame`, \n" +
+            "\t\tview1.nickZalo as `NickZalo`, \n" +
+            "\t\tview2.ID as ID,\n" +
+            "\t\tview2.user_id  as UserID,\n" +
+            "\t\tview2.StatusDongTien as StatusDongTien, \n" +
+            "\t\tview2.DaDong as DaDong, \n" +
+            "\t\tview2.HoTroGiai as HoTroGiai\n" +
+            "\tFROM view1, view2 WHERE view1.user_review_id = view2.user_id and view2.event_id = :userEventId ORDER BY view1.diemtrungbinh desc";
+    @Query(value = queryView, nativeQuery = true)
+    List<UserEventView> findUserByEventId2(Long userEventId);
+
     @Query("select count(ue.id)>0 from UserEvent ue  where ue.event.eventCode = :eventCode and ue.user.id = :userId")
     boolean existsBUserAndEvent(String eventCode, Long userId);
 }

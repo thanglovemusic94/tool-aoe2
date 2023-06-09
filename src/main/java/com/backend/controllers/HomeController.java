@@ -106,7 +106,7 @@ public class HomeController {
 
     @GetMapping("/event-register/{event_id}")
     public List<UserEventView> registerEventUser(@PathVariable Long event_id){
-        return userEventRepository.findUserByEventId(event_id);
+        return userEventRepository.findUserByEventId2(event_id);
     }
 }
 
