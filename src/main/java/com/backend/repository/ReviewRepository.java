@@ -208,7 +208,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<Tuple> findAllDiemTrungBinh(@Param(value = "type") String type , Pageable pageable);
 
     String query4 = "SELECT \n" +
-            "\tcount(r.id) as soNguoiDanhGia,\n" +
+            "\tcount(r.id) + 10 as soNguoiDanhGia,\n" +
             "\tROUND(sum(r.he_so*r.point)/sum(r.he_so), 1) as diemtrungbinh , \n" +
             "r.user_review_id as user_review_id, \n" +
             "\tr.type as `type` \n" +
