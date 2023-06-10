@@ -2,14 +2,13 @@ package com.backend.controllers;
 
 import com.backend.dto.DiemTrungBinhView;
 import com.backend.dto.TongDiemTBView;
+import com.backend.dto.TongTienView;
 import com.backend.dto.UserEventView;
 import com.backend.models.Event;
+import com.backend.models.NhaTaiTro;
 import com.backend.models.User;
 import com.backend.models.UserEvent;
-import com.backend.repository.EventRepository;
-import com.backend.repository.ReviewRepository;
-import com.backend.repository.UserEventRepository;
-import com.backend.repository.UserRepository;
+import com.backend.repository.*;
 import com.backend.security.services.AuthenticationFacade;
 import com.backend.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,8 @@ public class HomeController {
     @Autowired
     private UserEventRepository userEventRepository;
 
+    @Autowired
+    private NhaTaiTroRepository nhaTaiTroRepository;
 
     @Autowired
     AuthenticationFacade authenticationFacade;
@@ -107,6 +108,17 @@ public class HomeController {
     @GetMapping("/event-register/{event_id}")
     public List<UserEventView> registerEventUser(@PathVariable Long event_id){
         return userEventRepository.findUserByEventId2(event_id);
+    }
+
+
+    @GetMapping("/userevent/tongtien")
+    public TongTienView getTongTien(){
+        return userEventRepository.findOneTongTien();
+    }
+
+    @GetMapping("/nhataitro")
+    public List<NhaTaiTro> getNhaTaiTro() {
+        return nhaTaiTroRepository.findAll();
     }
 }
 

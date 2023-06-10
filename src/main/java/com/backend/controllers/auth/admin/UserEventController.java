@@ -1,5 +1,6 @@
 package com.backend.controllers.auth.admin;
 
+import com.backend.dto.TongTienView;
 import com.backend.models.UserEvent;
 import com.backend.repository.MagtRepository;
 import com.backend.repository.ReviewRepository;
@@ -24,25 +25,26 @@ public class UserEventController {
     private MagtRepository magtRepository;
 
     @Autowired
-    private UserEventRepository eventRepository;
+    private UserEventRepository userEventRepository;
 
     @Autowired
     AuthenticationFacade authenticationFacade;
 
     @PostMapping("/userevent/{id}")
     public UserEvent addData(@RequestBody UserEvent userEvent, @PathVariable Long id){
-        UserEvent userEvent1 = eventRepository.findById(id).get();
+        UserEvent userEvent1 = userEventRepository.findById(id).get();
         userEvent1.setStatusDongTien(userEvent.getStatusDongTien());
         userEvent1.setTienDong(userEvent.getTienDong());
         userEvent1.setTienHoTroGiai(userEvent.getTienHoTroGiai());
-        eventRepository.save(userEvent1);
+        userEventRepository.save(userEvent1);
         return userEvent1;
     }
 
     @DeleteMapping("/userevent/{id}")
     public UserEvent remove(@PathVariable Long id){
-        UserEvent userEvent1 = eventRepository.findById(id).get();
-        eventRepository.delete(userEvent1);
+        UserEvent userEvent1 = userEventRepository.findById(id).get();
+        userEventRepository.delete(userEvent1);
         return userEvent1;
     }
+
 }

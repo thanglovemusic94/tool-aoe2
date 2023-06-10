@@ -2,6 +2,7 @@ package com.backend.controllers.auth.admin;
 
 import com.backend.models.Event;
 import com.backend.models.Magt;
+import com.backend.models.UserEvent;
 import com.backend.repository.EventRepository;
 import com.backend.repository.MagtRepository;
 import com.backend.repository.ReviewRepository;
@@ -46,6 +47,23 @@ public class EventController {
         return eventRepository.findAll(pageable);
     }
 
+    @GetMapping("/event/{id}")
+    public Event eventById(@PathVariable Long id){
+        Event event = eventRepository.findById(id).get();
+        return event;
+    }
+
+    @PutMapping("/event/{id}")
+    public void updateEvent(@RequestBody @Valid Event event, @PathVariable Long id){
+        Event eventEdit = eventRepository.findById(id).get();
+        eventEdit.setTitle(event.getTitle());
+        eventEdit.setDescriptionShort(event.getDescriptionShort());
+        eventEdit.setNote(event.getNote());
+        eventEdit.setDescriptionLarge(event.getDescriptionLarge());
+        eventEdit.setTerm(event.getTerm());
+        eventEdit.setImage(event.getImage());
+        eventRepository.save(eventEdit);
+    }
 
     @PostMapping("/event")
     @ResponseStatus(HttpStatus.CREATED)

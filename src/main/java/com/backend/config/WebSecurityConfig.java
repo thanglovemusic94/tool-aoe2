@@ -1,4 +1,4 @@
-package com.backend.security;
+package com.backend.config;
 
 import com.backend.models.ERole;
 import com.backend.security.jwt.AuthEntryPointJwt;
@@ -7,6 +7,7 @@ import com.backend.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -76,7 +77,31 @@ public class WebSecurityConfig{
                 .allowedMethods(HttpMethod.DELETE.name(), HttpMethod.POST.name(),
                         HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(), HttpMethod.PUT.name(),
                         HttpMethod.PATCH.name())
-                .allowedOrigins("*");
+               .allowedOrigins(
+                       "http://toolaoe.s3-website-ap-southeast-1.amazonaws.com/",
+                       "http://checovuive.top/",
+                       "https://checovuive.top/",
+                       "http://aoeranking.top/",
+                       "https://aoeranking.top/"
+                       );
+      }
+    };
+  }
+
+  @Bean
+  @Profile("dev")
+  public WebMvcConfigurer corsConfigurer2() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedMethods(HttpMethod.DELETE.name(), HttpMethod.POST.name(),
+                        HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(), HttpMethod.PUT.name(),
+                        HttpMethod.PATCH.name())
+                .allowedOrigins(
+                        "http://localhost:3000/"
+                );
+
       }
     };
   }
