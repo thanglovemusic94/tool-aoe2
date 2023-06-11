@@ -39,11 +39,12 @@ public interface UserEventRepository  extends JpaRepository<UserEvent, Long> {
             "\t\tview1.inGame as `InGame`, \n" +
             "\t\tview1.nickZalo as `NickZalo`, \n" +
             "\t\tview2.ID as ID,\n" +
+            "\t\tview2.SDT as SDT,\n" +
             "\t\tview2.user_id  as UserID,\n" +
             "\t\tview2.StatusDongTien as StatusDongTien, \n" +
             "\t\tview2.DaDong as DaDong, \n" +
             "\t\tview2.HoTroGiai as HoTroGiai\n" +
-            "\tFROM view1, view2 WHERE view1.user_review_id = view2.user_id and view2.event_id = 2 ORDER BY view1.diemtrungbinh desc; ";
+            "\tFROM view1, view2 WHERE view1.user_review_id = view2.user_id and view2.event_id = 2 ORDER BY ROW_NUMBER() OVER(ORDER BY view1.diemtrungbinh desc) asc; ";
     @Query(value = queryView, nativeQuery = true)
     List<UserEventView> findUserByEventId2(Long userEventId);
 
