@@ -5,6 +5,7 @@ public interface UserEventView {
     Long getSTT();
     String getHang();
     String getSDT();
+    String getHoVaTen();
 
     Float getDiemTrungBinh();
     Long getID();

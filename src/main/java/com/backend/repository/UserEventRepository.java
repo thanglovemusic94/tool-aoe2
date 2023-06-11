@@ -40,6 +40,7 @@ public interface UserEventRepository  extends JpaRepository<UserEvent, Long> {
             "\t\tview1.nickZalo as `NickZalo`, \n" +
             "\t\tview2.ID as ID,\n" +
             "\t\tview2.SDT as SDT,\n" +
+            "\t\tview2.HoVaTen as HoVaTen,\n" +
             "\t\tview2.user_id  as UserID,\n" +
             "\t\tview2.StatusDongTien as StatusDongTien, \n" +
             "\t\tview2.DaDong as DaDong, \n" +
